@@ -15,6 +15,5 @@ accuse_red - 2
 accuse_blue - 3
 
 Outcome - 
--1 - No evidence
-0 - Evidence for blue
-1 - Evidence for red
+0 - No Evidence
+1 - Evidence found
