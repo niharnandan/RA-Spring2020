@@ -46,5 +46,6 @@ Investigate_ProcessData
 
 %% create images
 
-Investigate_Figures
+Investigate_Figures_P1
+Investigate_Figures_P2
 

@@ -1,4 +1,4 @@
-%% Investigate_Figures
+%% Investigate_Figures_P1
 
 %% TASK 1 - Y = ACCUSE PROB, X = CURRENT BELIEF
 
@@ -266,7 +266,7 @@ figureNAME = ['MatlabImages/Investigation_Figure',num2str(figureID)];
 print(gcf,figureNAME,'-dpdf')          % then print it
 
 
-%% TASK 1 - Y = ACCUSE PROB, X = CURRENT BELIEF
+%% TASK 2 - Y = ACCUSE PROB, X = CURRENT BELIEF
 
 % main figure (both treatments)
 figureID = 21201;
