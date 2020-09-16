@@ -1,0 +1,15 @@
+
+MLE for experimental data:
+
+
+1. Hypothesis: stop cost = 0
+MLE for (alpha1, alpha2, lambda): [1.95370459, 2.02603292, 0.01224477]
+
+
+2. Hypothesis: alpha1=alpha2
+MLE for (alpha, lambda, stop_cost): [2.61072544, 0.0160777212, 337.952591]
+
+
+3. Hypothesis: no restriction
+MLE for (alpha1, alpha2, lambda, stop_cost): 
+[2.66152120, 2.30404921, 0.0169499623, 335.112504]
