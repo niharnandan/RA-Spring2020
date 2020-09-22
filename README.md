@@ -11,3 +11,7 @@ People form opinions and shape beliefs based on
 2. repeated occasions to collect additional evidence
 
 Why do people change own mind so rarely? Searching too litte and too close to the prior
+
+# Current work
+
+All current changes are being made in the Fall folder.
