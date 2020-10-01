@@ -113,7 +113,7 @@ for i in range(1,63):
 ############################### simulation and write into csv file ###############################
 
 # write simulation results into csv file, write the first line to be column names
-with open('simulation results.csv','w') as csvfile:
+with open('simulation results.csv','w',newline='') as csvfile:
     filewriter = csv.writer(csvfile, delimiter=',',
                             quotechar='|',quoting=csv.QUOTE_MINIMAL)
     filewriter.writerow(column_name)
@@ -213,7 +213,7 @@ for c in cost:
                 p = p0
             
             # write the sequence of investigation choice of one trial into the csv
-            with open('simulation results.csv','a') as csvfile:
+            with open('simulation results.csv','a',newline='') as csvfile:
                 filewriter = csv.writer(csvfile)
                 filewriter.writerow(investigation)
         

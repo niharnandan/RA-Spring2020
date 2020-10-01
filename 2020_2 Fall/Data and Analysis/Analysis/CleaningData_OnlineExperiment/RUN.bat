@@ -7,7 +7,7 @@ jupyter nbconvert --to notebook --execute Code/Step1.ipynb
 ECHO ============================
 ECHO Running Step 2
 ECHO ============================
-jupyter nbconvert --to notebook --execute Code/Step2.ipynb
+jupyter nbconvert --to notebook --ExecutePreprocessor.timeout=120 --execute Code/Step2.ipynb
 ECHO ============================
 ECHO Running Step 3
 ECHO ============================
