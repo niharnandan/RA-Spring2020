@@ -10,4 +10,4 @@ Make sure Python3 is installed.
 
 Update the Output location in the ```Output_Location.txt``` relative to the notebooks in the code sub-folder.
 
-Run the RUN.bat file. MAC shell script coming soon.
+Run the RUN.bat file on Windows or RUN.sh on Linux/Mac. 
