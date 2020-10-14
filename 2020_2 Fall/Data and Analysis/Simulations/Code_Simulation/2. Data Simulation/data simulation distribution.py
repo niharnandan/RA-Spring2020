@@ -49,7 +49,8 @@ def randomness(k,v_stop,v_red,v_blue):
 
 
 ############################### set parameters ###############################
-k = 0.04 # parameter (lambda) in randomness
+#k = 0.04 # parameter (lambda) in randomness
+k = 2.0 # parameter (lambda) in randomness
 p_grid = np.linspace(0,1,1001,endpoint=True) # p grid
 trial = 60 # total number of available trials
 cost = [5,10,20,40,80] # cost per investigation

@@ -25,7 +25,7 @@ alpha_2 = 1 # update in the direction of less likely
 accuracy1 = 0.25 # prob of reveal for 1
 accuracy2 = 0.25 # prob of reveal for 2
 cost_vector = [5,10,20,40,80] # cost levels for investigation
-stop_cost = 100 # stop cost
+stop_cost = 0 # stop cost
 reward = 1000 # reward for getting the right state
 number = 1001 # number of grids
 p_grid = np.linspace(0,1,number,endpoint=True) # p grid
