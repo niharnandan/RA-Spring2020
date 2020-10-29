@@ -5,6 +5,7 @@ from os import listdir
 from os.path import isfile, join
 import warnings
 warnings.filterwarnings('ignore')
+from tqdm import tqdm
 
 
 ## DESCRIPTION OF THE SCRIPT
@@ -49,10 +50,11 @@ for name in range(65,65+no_files):
     for i in values: step2_df = step2_df.replace(i, values.index(i))
 	
 	#Iterating over rows in the dataframe. 
-    for key,value in step2_df.iterrows():
+    for key,value in tqdm(step2_df.iterrows()):
         temp = step2_df.iloc[key, 7:69].to_list() #Storing the choice columns into array 
         outcome = [x for x in temp if x != np.nan and (x == 5) or (x == 1) or (x == 0)]
-        outcome = [1 if i == 5 else 0 for i in outcome]
+        add_evidence = [] if 5 in temp else [0]
+        outcome = [1 if i == 5 else 0 for i in outcome] + add_evidence
         for i in range(1,len(outcome)+1):
             step2_df['outcome_'+str(i)][key] = outcome[i-1]
             

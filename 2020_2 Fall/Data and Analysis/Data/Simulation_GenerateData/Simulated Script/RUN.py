@@ -79,6 +79,5 @@ for iterate in range(r_no_files):
 
 ## CLEAN THE DATASET (STEPS 2,3,4)
 exec(open('./Step2.py').read())
-exec(open('./Step3.py').read())
 exec(open('./Step4.py').read())
 
