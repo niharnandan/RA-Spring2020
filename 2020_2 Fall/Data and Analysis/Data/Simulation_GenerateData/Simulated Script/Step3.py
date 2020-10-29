@@ -24,9 +24,12 @@ no_files = int(f[8])
 
 ## REPEAT FOR EVERY FILE IN THE FOLDER
 for name in range(65,65+no_files):
+
+    # Read file
+    print('Running Step 3 for File', chr(name))
     temp1 = pd.read_csv(oloc+'Step2_'+chr(name)+'.csv')
 
-    # ??? ASK NIHAR
+    # Replace 1s and 0s in the dataset in a way that is consistent across the file
     for key,value in temp1.iterrows():
         if value[1] == 0:
             temp = temp1.iloc[key, 9:69].to_list()
