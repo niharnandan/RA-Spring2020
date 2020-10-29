@@ -7,9 +7,9 @@ print('Currently running RUN')
 ##############################################################################
 
 ## INPUT PARAMETERS - CAN RUN SIMULATIONS FOR SEVERAL CONDITIONS
-r_alpha_1 = [1,0.8]     # default=1		# relative update after a signal (consistent with prior)
-r_alpha_2 = [1,0.8]     # default=1		# relative update after a signal (at odd with prior)
-r_stop_cost  = [0,0]    # default=0		# cognitive cost for stopping without certainty
+r_alpha_1 =     [1, 0.8,   1,   1]     # default=1		# relative update after a signal (consistent with prior)
+r_alpha_2 =     [1, 0.8, 0.6,   1]     # default=1		# relative update after a signal (at odd with prior)
+r_stop_cost  =  [0,   0,   0, 100]    # default=0		# cognitive cost for stopping without certainty
 #r_file_name = ['Optimal','Conservative_08'] # names for the files
 
 ## PARAMETER - FIXED (do not change across simulations)

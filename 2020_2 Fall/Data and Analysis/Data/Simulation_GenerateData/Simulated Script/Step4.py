@@ -26,6 +26,8 @@ oloc = open("../Output_Location (Simulated).txt", "r").read()
 for name in range(65,65+no_files):
 
 	# Read file
+    # Read file
+    print('Running Step 4 for File', chr(name))
     step4_df = pd.read_csv(oloc+'Step2_'+chr(name)+'.csv')
     step4_df.head()
     data = []
