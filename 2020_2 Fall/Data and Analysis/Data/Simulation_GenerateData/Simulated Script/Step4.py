@@ -62,7 +62,7 @@ for name in range(65,65+no_files):
             post = value[7] if e_f == 1 else post
 
     # Store accuse row. 
-        if len(rounds) == 0: 
+        if len(rounds) == 0:
             i = 0
         else:
             i += 1

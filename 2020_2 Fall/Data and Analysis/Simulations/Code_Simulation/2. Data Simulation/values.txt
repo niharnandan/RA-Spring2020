@@ -1,0 +1,17 @@
+1
+1 
+0.25 
+0.25 
+5,10,20,40,80
+0 
+1000 
+1001 
+
+# alpha_1, update in the direction of more likely
+# alpha_2, update in the direction of less likely
+# accuracy1, prob of reveal for 1
+# accuracy2, prob of reveal for 2
+# cost_vector, cost levels for investigation
+# stop_cost, stop cost
+# reward, reward for getting the right state
+# number
