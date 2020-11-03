@@ -1,1 +1,49 @@
-{"xaxis": [0.3, 1.7], "yaxis": [0, 1], "title ": "Probability of finding Evidence", "xtick": [1, 2], "ytick": 
+{
+  "bar": {
+    "xaxis": [
+      0.3,
+      1.7
+    ],
+    "yaxis": [
+      0,
+      1
+    ],
+    "title": "Probability of finding Evidence",
+    "xtick": [
+      0.07,
+      1.5
+    ],
+    "ytick": [
+      0,
+      0.25,
+      1
+    ],
+    "names": [
+      "Human",
+      "Bayes"
+    ],
+    "ylabel": "Pr(Evidence)",
+    "xlabel": "Agent",
+    "t2_avg_score": [
+      1292.9854166666667,
+      1387.182
+    ],
+    "t2_avg_samples": [
+      2.9570833333333333,
+      3.204
+    ],
+    "t2_perc_confirmatory_allrounds": [
+      0.5541236554243263,
+      0.686794752904307
+    ],
+    "t2_perc_confirmatory_round1": [
+      0.7781613791877722,
+      0.8064048061502431
+    ],
+    "colors": [
+      "red",
+      "blue"
+    ],
+    "width": 0.4
+  }
+}
