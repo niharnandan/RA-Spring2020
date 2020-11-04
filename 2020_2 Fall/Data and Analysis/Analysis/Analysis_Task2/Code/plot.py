@@ -40,3 +40,16 @@ def heatmap (title, values, xlabel, ylabel, colors='bwr',  xtick=range(1,10), yt
     ax.set_title(title)
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
+    
+def scatter (title, x, y, xlabel, ylabel, xaxis, yaxis, colors='gray', xtick=range(1,10), ytick=range(1,10)):
+    import matplotlib.pyplot as plt
+    plt.plot(x, y, 'o', color = colors)
+    plt.xticks(ticks=xtick)
+    plt.yticks(ticks=ytick)
+    plt.xlim(xaxis[0], xaxis[1])
+    plt.ylim(yaxis[0], yaxis[1])
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.title(title)
+    plt.savefig('../images/'+title+'.pdf', format = 'pdf')
+    plt.show()
