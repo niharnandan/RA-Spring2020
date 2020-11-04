@@ -55,7 +55,7 @@
       0,
       10
     ],
-    "title": "Probability of finding Evidence",
+    "title": "Pr(confirmatory) vs Avg number of samples",
     "xtick": [
       0.1,
       0.3,

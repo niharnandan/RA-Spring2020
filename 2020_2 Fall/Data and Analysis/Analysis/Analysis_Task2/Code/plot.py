@@ -1,3 +1,5 @@
+### Contains functions to create plots. These functions are called in the create plot function. 
+
 def plot2d(title, x, y, xlabel, ylabel, colors=['red'], lw=[1], ls=['-.'], xaxis=[0,10], yaxis=[0,10], xtick=range(1,10), ytick=range(1,10)):
     import matplotlib.pyplot as plt
     for i in range(len(y)):

@@ -1,5 +1,5 @@
 def c_statistic(file):
-
+    # Import required functions from modules locally
     from pandas import read_csv
     from numpy import mean
     # read dataset
@@ -12,8 +12,6 @@ def c_statistic(file):
     t2_investigate_clean = t2_investigate.loc[t2_investigate['evidence_found'] == 0]  
     # select accuse rounds WITH evidence found
     t2_accuse_certain = t2_accuse.loc[t2_accuse['evidence_found'] == 1]
-
-    
     # number of collected samples at the accusation round (= round ID - 1)
     distr_stop_time = t2_accuse['current_rounds'].to_list()
     distr_stop_time = [x - 1 for x in distr_stop_time]
@@ -22,21 +20,13 @@ def c_statistic(file):
     # equivalent method (same result)
     t2_totsamples = t2_accuse.iloc[:,10]+t2_accuse.iloc[:,11]
     t2_avg_samples = mean(t2_totsamples)
-    #print(t2_avg_samples)
-
-    
     # distribution of beliefs at the accusation round
     distr_stop_belief = t2_accuse['posterior'].to_list()
-    
     # percentage correct accusation
     t2_accuse_correct = t2_accuse.iloc[:,15]==t2_accuse.iloc[:,16]
     t2_perc_correct = mean(t2_accuse_correct)
-    #print(t2_perc_correct)
-    
     # percentage evidence found
     t2_perc_evidence_found = mean(t2_accuse.iloc[:,12])
-    #print(t2_perc_evidence_found)
-
     # FIRST ROUND CONFIRMATORY BEHAVIOR (investigate only)
     select_rounds = t2_investigate
     select_rounds = select_rounds.loc[select_rounds.iloc[:,7]==1,:]
@@ -48,8 +38,6 @@ def c_statistic(file):
     avg_rounds_high = 1-mean(select_rounds_high.iloc[:,9])
     # confirmatory behavior in round 1
     t2_perc_confirmatory_round1 = mean([avg_rounds_low, avg_rounds_high])
-    #print(t2_perc_confirmatory_round1)
-
     # ALL ROUNDS CONFIRMATORY BEHAVIOR (investigate only)
     select_rounds = t2_investigate_clean
     # pr(blue) when blue is more likely
@@ -60,16 +48,11 @@ def c_statistic(file):
     avg_rounds_high = 1-mean(select_rounds_high.iloc[:,9])
     no_part = select_rounds['participant_ID'].max()
     t2_perc_confirmatory_allrounds = mean([avg_rounds_low, avg_rounds_high])
-    #print(t2_perc_confirmatory_allrounds)
-    
     # score (good for tasks 2 and 3)
     t2_unitcostred  = t2_accuse.iloc[:,4]
     t2_unitcostblue = t2_accuse.iloc[:,5]
     t2_round_score = 500 + t2_accuse_correct*1000  -t2_unitcostred*t2_accuse.iloc[:,10] -t2_unitcostblue*t2_accuse.iloc[:,11]
     t2_avg_score = mean(t2_round_score)    
-    #print(t2_avg_score)    
-    
-    
     # RETURN OUTPUT
     return t2_avg_score,t2_avg_samples,t2_perc_confirmatory_allrounds,t2_perc_confirmatory_round1
     
