@@ -11,10 +11,13 @@ warnings.filterwarnings('ignore')
 
 folder = ''
 oloc = open("../Output_Location.txt", "r").read()
-temp1 = pd.read_csv(oloc+'Task1_step3.csv')
-temp1.head()
+df = pd.read_csv(oloc+'Task1_step3.csv')
+
+print('Running Task 1 :')
+
+df.head()
 data = []
-for key,value in tqdm(temp1.iterrows()):
+for key,value in tqdm(df.iterrows()):
     info_b = value[:6].to_list()
     info_e = value[6:8].to_list()
     rounds = value[8:17].to_list()
@@ -29,7 +32,7 @@ for key,value in tqdm(temp1.iterrows()):
         pi = 1 if suspect[-1] == 0 else 0.75
         temp = [i+1, 0, suspect[-1], suspect[:-1].count(0.0), 
                suspect[:-1].count(1.0), e_f, e_s]
-        data.append(info_b+temp+[post]+info_e+[temp1['timing_choice_'+str(i+1)][key]])
+        data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+1)][key]])
         post = post*pg/(post*pg + pi*(1-post))
         e_f = int(value[17+i]) if e_f != 1 else 1
         if e_f == 1: 
@@ -37,7 +40,7 @@ for key,value in tqdm(temp1.iterrows()):
         else: e_f = 1 if e_f == 1 and i != 0 else 0
         post = value[7] if e_f == 1 else post
     temp = [i+2, 1, value[7], suspect.count(0.0), suspect.count(1.0), e_f, e_s]
-    data.append(info_b+temp+[post]+info_e+[temp1['timing_choice_'+str(i+2)][key]])
+    data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+2)][key]])
 cols = ['participant_ID', 'treatment', 'part', 'trial_no', 'rounds',
        'red_prior_prob', 'current_rounds', 'action_type', 'suspect', 
         'count_red_samples', 'count_blue_samples', 'evidence_found',
@@ -48,10 +51,13 @@ df2.head()
 df2.to_csv(oloc+'Task1_step4.csv', index=False)
 
 folder = ''
-temp1 = pd.read_csv(oloc+'Task2_step3.csv')
-temp1.head()
+df = pd.read_csv(oloc+'Task2_step3.csv')
+
+print('Running Task 2 :')
+
+df.head()
 data = []
-for key,value in tqdm(temp1.iterrows()):
+for key,value in tqdm(df.iterrows()):
     info_b = value[:7].to_list()
     info_e = value[7:9].to_list()
     rounds = value[9:69].to_list()
@@ -68,7 +74,7 @@ for key,value in tqdm(temp1.iterrows()):
         pi = 1 if suspect[-1] == 0 else 0.75
         temp = [i, 0, suspect[-1], suspect[:-1].count(0.0), 
                suspect[:-1].count(1.0), e_f, e_s]
-        data.append(info_b+temp+[post]+info_e+[temp1['timing_choice_'+str(i+1)][key]])
+        data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+1)][key]])
         post = post*pg/(post*pg + pi*(1-post))
         
         e_f = int(value[69+i]) if e_f != 1 else 1
@@ -79,7 +85,7 @@ for key,value in tqdm(temp1.iterrows()):
     if len(rounds) == 1 or len(rounds) == 0: i = 0
     suspect.append(value[7])
     temp = [i+1, 1, suspect[-1], suspect[:-1].count(0.0), suspect[:-1].count(1.0), e_f, e_s]
-    data.append(info_b+temp+[post]+info_e+[temp1['timing_choice_'+str(i+2)][key]])
+    data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+2)][key]])
 cols = ['participant_ID', 'treatment', 'part', 'trial_no', 'setup_cost_red', 'setup_cost_blue',
        'red_prior_prob', 'current_rounds', 'action_type', 'suspect', 
         'count_red_samples', 'count_blue_samples', 'evidence_found',
@@ -91,9 +97,12 @@ df2 = df2.fillna(0)
 df2.to_csv(oloc+'Task2_step4.csv', index=False)
 
 folder = ''
-temp1 = pd.read_csv(oloc+'Task3_step3.csv')
+df = pd.read_csv(oloc+'Task3_step3.csv')
+
+print('Running Task 3 :')
+
 data = []
-for key,value in tqdm(temp1.iterrows()):
+for key,value in tqdm(df.iterrows()):
     info_b = value[:7].to_list()
     info_e = value[7:9].to_list()
     rounds = value[9:69].to_list()
@@ -110,7 +119,7 @@ for key,value in tqdm(temp1.iterrows()):
         pi = 1 if suspect[-1] == 0 else 0.75
         temp = [i, 0, suspect[-1], suspect[:-1].count(0.0), 
                suspect[:-1].count(1.0), e_f, e_s]
-        data.append(info_b+temp+[post]+info_e+[temp1['timing_choice_'+str(i+1)][key]])
+        data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+1)][key]])
         post = post*pg/(post*pg + pi*(1-post))
         
         e_f = int(value[69+i]) if e_f != 1 else 1
@@ -121,7 +130,7 @@ for key,value in tqdm(temp1.iterrows()):
     if len(rounds) == 1 or len(rounds) == 0: i = 0
     suspect.append(value[7])
     temp = [i+1, 1, suspect[-1], suspect[:-1].count(0.0), suspect[:-1].count(1.0), e_f, e_s]
-    data.append(info_b+temp+[post]+info_e+[temp1['timing_choice_'+str(i+2)][key]])
+    data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+2)][key]])
 cols = ['participant_ID', 'treatment', 'part', 'trial_no', 'setup_cost_red', 'setup_cost_blue',
        'red_prior_prob', 'current_rounds', 'action_type', 'suspect', 
         'count_red_samples', 'count_blue_samples', 'evidence_found',

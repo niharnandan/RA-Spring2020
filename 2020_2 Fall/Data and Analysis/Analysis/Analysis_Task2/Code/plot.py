@@ -1,16 +1,16 @@
 ### Contains functions to create plots. These functions are called in the create plot function. 
 
-def plot2d(title, x, y, xlabel, ylabel, colors=['red'], lw=[1], ls=['-.'], xaxis=[0,10], yaxis=[0,10], xtick=range(1,10), ytick=range(1,10)):
+def plot2d(title, x, y, xlabel, ylabel, colors=['red'], lw=[1], ls=['-.'], xaxis=[0,10], yaxis=[0,1], xtick=[], ytick=[], show=True):
     import matplotlib.pyplot as plt
+    if len(colors) == 1: colors = colors*len(y)
+    if len(lw) == 1: lw = lw*len(y)
+    if len(ls) == 1: ls = ls*len(y)
     for i in range(len(y)):
-        plt.plot(x, y[i], linewidth=lw[i], color = colors[i], linestyle=ls[i])
-    plt.xticks(ticks=xtick)
-    plt.yticks(ticks=ytick)
-    plt.xlim(xaxis[0], xaxis[1])
-    plt.ylim(yaxis[0], yaxis[1])
+        plt.plot(x[i], y[i], linewidth=lw[i], color = colors[i], linestyle=ls[i])
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.title(title)
+    if show: plt.show()
     
 def bar(title, y, xlabel, ylabel, colors=['red','blue'], names = [''], yaxis=[0,4], xtick=range(1,10), ytick=range(1,10), width = 0.7):
     import matplotlib.pyplot as plt

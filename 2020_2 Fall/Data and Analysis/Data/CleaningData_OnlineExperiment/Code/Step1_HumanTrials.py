@@ -21,22 +21,22 @@ for i in range(len(files)):
     sum += temp[i].count()
 for i in range(len(files)-1):
     temp[0] = temp[0].append(temp[i+1], ignore_index=True, sort=False)
-temp1 = temp[0].copy(deep = True)
-temp1['part'] = 0
-temp1['treatment'] = 0
+df = temp[0].copy(deep = True)
+df['part'] = 0
+df['treatment'] = 0
 cols = ['treatment']
-[temp1.columns.get_loc(c) for c in cols if c in temp1]
-for key,value in temp1.iterrows():
-    if 'part1' in value[1]: temp1['part'][key] = 1
-    elif 'part2' in value[1]: temp1['part'][key] = 2
-    else: temp1['part'][key] = 3
-    if 'guilty' in value[1]: temp1['treatment'][key] = 1
-    else: temp1['treatment'][key] = 0
-temp1 = temp1.drop(columns=['block_name'])
+[df.columns.get_loc(c) for c in cols if c in df]
+for key,value in df.iterrows():
+    if 'part1' in value[1]: df['part'][key] = 1
+    elif 'part2' in value[1]: df['part'][key] = 2
+    else: df['part'][key] = 3
+    if 'guilty' in value[1]: df['treatment'][key] = 1
+    else: df['treatment'][key] = 0
+df = df.drop(columns=['block_name'])
 for i in range(1,4):
-    cols = temp1.columns.tolist()
+    cols = df.columns.tolist()
     cols.remove('participant_ID')
     cols = ['participant_ID'] + cols
-    temp1 = temp1[cols]
-    temp2 = temp1.loc[temp1['part'] == i]
+    df = df[cols]
+    temp2 = df.loc[df['part'] == i]
     temp2.to_csv(oloc+'Task'+str(i)+'.csv', index=False)

@@ -1,3 +1,4 @@
+# Import libraries
 import numpy as np
 import pandas as pd
 from os import listdir
@@ -6,9 +7,14 @@ import warnings
 from tqdm import tqdm
 warnings.filterwarnings('ignore')
 mypath= '../../../Data/RawData_OnlineExperiment/'
+
+# Output location from previous task
 oloc = open("../Output_Location.txt", "r").read()
 
-temp1 = pd.read_csv(oloc+'Task1.csv')
+# Read in Task 1 file
+df = pd.read_csv(oloc+'Task1.csv')
+
+print('Running Task 1')
 
 d_columns = ['choice_'+str(i) for i in range(12,63)]
 d_columns += ['timing_choice_'+str(i) for i in range(12,63)]
@@ -18,28 +24,28 @@ d_columns += ['num_evidences_total', 'final_evidence', 'bonus_earned',
         'trial_chosen_for_bonus', 'total_bonus_paid_cents', 'setup_cost_investigate_red',
               'setup_cost_investigate_blue', 'timing_valid', 'timing_error', 
              'choice_10', 'choice_11']
-temp1 = temp1.drop(columns = d_columns)
-temp1 = temp1.replace('red', 0)
-temp1 = temp1.replace('blue', 1)
-temp1 = temp1.rename(columns={"setup_cost": "rounds",})# 'guilty_suspect_chosen': 'true_guilty_suspect'})
-temp1['true_guilty_suspect'] = 0
-temp1['evidence_round'] = 0
+df = df.drop(columns = d_columns)
+df = df.replace('red', 0)
+df = df.replace('blue', 1)
+df = df.rename(columns={"setup_cost": "rounds",})# 'guilty_suspect_chosen': 'true_guilty_suspect'})
+df['true_guilty_suspect'] = 0
+df['evidence_round'] = 0
 for i in range(9,0,-1):
-    temp1.insert(48, 'outcome_'+str(i), np.nan)
-temp1.correct_suspect_accused = temp1.correct_suspect_accused.astype(int)
+    df.insert(48, 'outcome_'+str(i), np.nan)
+df.correct_suspect_accused = df.correct_suspect_accused.astype(int)
 
 c = ['choice_' + str(i) for i in range(1,12)]
 temp = ['investigate_red','investigate_blue','accuse_red','accuse_blue','advance_to_next_trial']
 
 for i in temp:
-    temp1 = temp1.replace(i, temp.index(i))
+    df = df.replace(i, temp.index(i))
     
-evr_col = temp1.columns.to_list().index('evidence_red_1')
-evb_col = temp1.columns.to_list().index('evidence_blue_1')
-out_col = temp1.columns.to_list().index('outcome_1')
-choice_col = temp1.columns.to_list().index('choice_1')
-for key,value in tqdm(temp1.iterrows()):
-    temp1['true_guilty_suspect'][key] = temp1['suspect_accused'][key] ^ 1 if temp1['correct_suspect_accused'][key] == 0 else temp1['suspect_accused'][key]
+evr_col = df.columns.to_list().index('evidence_red_1')
+evb_col = df.columns.to_list().index('evidence_blue_1')
+out_col = df.columns.to_list().index('outcome_1')
+choice_col = df.columns.to_list().index('choice_1')
+for key,value in tqdm(df.iterrows()):
+    df['true_guilty_suspect'][key] = df['suspect_accused'][key] ^ 1 if df['correct_suspect_accused'][key] == 0 else df['suspect_accused'][key]
     temp = []
     counter_r = 0
     counter_b = 0
@@ -51,14 +57,14 @@ for key,value in tqdm(temp1.iterrows()):
             temp.append(1) if value[evb_col+counter_b] == 1 else temp.append(0)
             counter_b += 1
     for i in range(1,len(temp)+1):
-        temp1['outcome_'+str(i)][key] = temp[i-1]
+        df['outcome_'+str(i)][key] = temp[i-1]
     
-    temp = temp1.iloc[key, out_col:].to_list()
-    temp1['evidence_round'][key] = temp.index(1.0)+1 if 1 in temp else 0
+    temp = df.iloc[key, out_col:].to_list()
+    df['evidence_round'][key] = temp.index(1.0)+1 if 1 in temp else 0
     
-    temp = temp1.iloc[key, choice_col:choice_col+9].to_list()
+    temp = df.iloc[key, choice_col:choice_col+9].to_list()
     temp = [x if x == 1 or x == 0 else np.nan for x in temp]
-    temp1.iloc[key, choice_col:choice_col+9] = temp
+    df.iloc[key, choice_col:choice_col+9] = temp
 
 d_columns = ['evidence_red_1', 'evidence_red_2', 'evidence_red_3', 
         'evidence_red_4', 'evidence_red_5', 'evidence_red_6', 
@@ -66,7 +72,7 @@ d_columns = ['evidence_red_1', 'evidence_red_2', 'evidence_red_3',
         'evidence_blue_1', 'evidence_blue_2', 'evidence_blue_3', 
         'evidence_blue_4', 'evidence_blue_5', 'evidence_blue_6', 
         'evidence_blue_7', 'evidence_blue_8', 'evidence_blue_9']
-temp1 = temp1.drop(columns = d_columns)
+df = df.drop(columns = d_columns)
 
 cols = ['participant_ID', 'treatment', 'part', 'trial_no', 
          'rounds', 'red_prior_prob',
@@ -80,33 +86,35 @@ cols = ['participant_ID', 'treatment', 'part', 'trial_no',
         'timing_choice_9', 'timing_choice_10', 'timing_choice_11', 
         
         'correct_suspect_accused', 'evidence_round']
-temp1 = temp1[cols]
-temp1.to_csv(oloc+'Task1_step2.csv', index=False)
+df = df[cols]
+df.to_csv(oloc+'Task1_step2.csv', index=False)
 
-folder = ''
-temp1 = pd.read_csv(oloc+'Task2.csv')
+df = pd.read_csv(oloc+'Task2.csv')
+
+print('Running Task 2')
+
 drop_columns = ['num_evidences_total', 'final_evidence', 'bonus_earned', 
         'trial_chosen_for_bonus', 'total_bonus_paid_cents', 'timing_valid', 'timing_error']
 num_rounds = 60
-temp1 = temp1.drop(columns = drop_columns)
-temp1 = temp1.replace('red', 0)
-temp1 = temp1.replace('blue', 1)
-temp1['true_guilty_suspect'] = 0
-temp1['evidence_round'] = 0
+df = df.drop(columns = drop_columns)
+df = df.replace('red', 0)
+df = df.replace('blue', 1)
+df['true_guilty_suspect'] = 0
+df['evidence_round'] = 0
 
 for i in range(num_rounds,0,-1):
-    temp1.insert(68, 'outcome_'+str(i), np.nan)
-temp1.correct_suspect_accused = temp1.correct_suspect_accused.astype(int)
+    df.insert(68, 'outcome_'+str(i), np.nan)
+df.correct_suspect_accused = df.correct_suspect_accused.astype(int)
 
 temp = ['investigate_red','investigate_blue','accuse_red','accuse_blue','advance_to_next_trial']
 
 for i in temp:
-    temp1 = temp1.replace(i, temp.index(i))
-temp1.astype({'suspect_accused': 'int'}).dtypes
-temp1.astype({'correct_suspect_accused': 'int'}).dtypes
+    df = df.replace(i, temp.index(i))
+df.astype({'suspect_accused': 'int'}).dtypes
+df.astype({'correct_suspect_accused': 'int'}).dtypes
 p_count = 0
-for key,value in tqdm(temp1.iterrows()):
-    temp1['true_guilty_suspect'][key] = int(temp1['suspect_accused'][key]) ^ 1 if temp1['correct_suspect_accused'][key] == 0 else temp1['suspect_accused'][key]
+for key,value in tqdm(df.iterrows()):
+    df['true_guilty_suspect'][key] = int(df['suspect_accused'][key]) ^ 1 if df['correct_suspect_accused'][key] == 0 else df['suspect_accused'][key]
     temp = []
     counter_r = 0
     counter_b = 0
@@ -118,15 +126,15 @@ for key,value in tqdm(temp1.iterrows()):
             temp.append(1) if value[221+counter_b] == 1 else temp.append(0)
             counter_b += 1
     for i in range(1,len(temp)+1):
-        temp1['outcome_'+str(i)][key] = temp[i-1]
+        df['outcome_'+str(i)][key] = temp[i-1]
     
-    temp = temp1.iloc[key, 68:130].to_list()
-    temp1['evidence_round'][key] = temp.index(1.0)+1 if 1 in temp else 0
+    temp = df.iloc[key, 68:130].to_list()
+    df['evidence_round'][key] = temp.index(1.0)+1 if 1 in temp else 0
     
     
-    temp = temp1.iloc[key, 7:67].to_list()
+    temp = df.iloc[key, 7:67].to_list()
     temp = [x if x == 1 or x == 0 else np.nan for x in temp]
-    temp1.iloc[key, 7:67] = temp
+    df.iloc[key, 7:67] = temp
 
 d1 = ['evidence_red_'+str(i) for i in range(1,31)]
 d2 = ['evidence_blue_'+str(i) for i in range(1,31)]
@@ -134,39 +142,41 @@ d3 = ['choice_'+str(i) for i in range(1,61)]
 d4 = ['outcome_'+str(i) for i in range(1,61)]
 d5 = ['timing_choice_'+str(i) for i in range(1,63)]
 d_columns = d1+d2
-temp1 = temp1.drop(columns = d_columns)
-temp1['setup_cost_blue'] = temp1['setup_cost']
-temp1 = temp1.rename(columns={"setup_cost": "setup_cost_red",})# 'guilty_suspect_chosen': 'true_guilty_suspect'})
+df = df.drop(columns = d_columns)
+df['setup_cost_blue'] = df['setup_cost']
+df = df.rename(columns={"setup_cost": "setup_cost_red",})# 'guilty_suspect_chosen': 'true_guilty_suspect'})
 cols = ['participant_ID', 'treatment', 'part', 'trial_no', 
          'setup_cost_red', 'setup_cost_blue', 'red_prior_prob',
         'true_guilty_suspect', 'suspect_accused']+d3+d4+d5+['correct_suspect_accused', 'evidence_round']
-temp1 = temp1[cols]
-temp1.to_csv(oloc+'Task2_step2.csv', index=False)
+df = df[cols]
+df.to_csv(oloc+'Task2_step2.csv', index=False)
 
-folder = ''
-temp1 = pd.read_csv(oloc+'Task3.csv')
+df = pd.read_csv(oloc+'Task3.csv')
+
+print('Running Task 3')
+
 drop_columns = ['num_evidences_total', 'final_evidence', 'bonus_earned', 
         'trial_chosen_for_bonus', 'total_bonus_paid_cents', 'timing_valid', 'timing_error']
 num_rounds = 60
-temp1 = temp1.drop(columns = drop_columns)
-temp1 = temp1.replace('red', 0)
-temp1 = temp1.replace('blue', 1)
-temp1['true_guilty_suspect'] = 0
-temp1['evidence_round'] = 0
+df = df.drop(columns = drop_columns)
+df = df.replace('red', 0)
+df = df.replace('blue', 1)
+df['true_guilty_suspect'] = 0
+df['evidence_round'] = 0
 
 for i in range(num_rounds,0,-1):
-    temp1.insert(68, 'outcome_'+str(i), np.nan)
-temp1.correct_suspect_accused = temp1.correct_suspect_accused.astype(int)
+    df.insert(68, 'outcome_'+str(i), np.nan)
+df.correct_suspect_accused = df.correct_suspect_accused.astype(int)
 
 temp = ['investigate_red','investigate_blue','accuse_red','accuse_blue','advance_to_next_trial']
 
 for i in temp:
-    temp1 = temp1.replace(i, temp.index(i))
-temp1.astype({'suspect_accused': 'int'}).dtypes
-temp1.astype({'correct_suspect_accused': 'int'}).dtypes
+    df = df.replace(i, temp.index(i))
+df.astype({'suspect_accused': 'int'}).dtypes
+df.astype({'correct_suspect_accused': 'int'}).dtypes
 p_count = 0
-for key,value in tqdm(temp1.iterrows()):
-    temp1['true_guilty_suspect'][key] = int(temp1['suspect_accused'][key]) ^ 1 if temp1['correct_suspect_accused'][key] == 0 else temp1['suspect_accused'][key]
+for key,value in tqdm(df.iterrows()):
+    df['true_guilty_suspect'][key] = int(df['suspect_accused'][key]) ^ 1 if df['correct_suspect_accused'][key] == 0 else df['suspect_accused'][key]
     temp = []
     counter_r = 0
     counter_b = 0
@@ -178,15 +188,15 @@ for key,value in tqdm(temp1.iterrows()):
             temp.append(1) if value[221+counter_b] == 1 else temp.append(0)
             counter_b += 1
     for i in range(1,len(temp)+1):
-        temp1['outcome_'+str(i)][key] = temp[i-1]
+        df['outcome_'+str(i)][key] = temp[i-1]
     
-    temp = temp1.iloc[key, 68:130].to_list()
-    temp1['evidence_round'][key] = temp.index(1.0)+1 if 1 in temp else 0
+    temp = df.iloc[key, 68:130].to_list()
+    df['evidence_round'][key] = temp.index(1.0)+1 if 1 in temp else 0
     
     
-    temp = temp1.iloc[key, 7:67].to_list()
+    temp = df.iloc[key, 7:67].to_list()
     temp = [x if x == 1 or x == 0 else np.nan for x in temp]
-    temp1.iloc[key, 7:67] = temp
+    df.iloc[key, 7:67] = temp
 
 d1 = ['evidence_red_'+str(i) for i in range(1,31)]
 d2 = ['evidence_blue_'+str(i) for i in range(1,31)]
@@ -194,11 +204,11 @@ d3 = ['choice_'+str(i) for i in range(1,61)]
 d4 = ['outcome_'+str(i) for i in range(1,61)]
 d5 = ['timing_choice_'+str(i) for i in range(1,63)]
 d_columns = d1+d2
-temp1 = temp1.drop(columns = d_columns)
-temp1 = temp1.rename(columns={"setup_cost_investigate_red": "setup_cost_red",
+df = df.drop(columns = d_columns)
+df = df.rename(columns={"setup_cost_investigate_red": "setup_cost_red",
                              "setup_cost_investigate_blue": "setup_cost_blue"})# 'guilty_suspect_chosen': 'true_guilty_suspect'})
 cols = ['participant_ID', 'treatment', 'part', 'trial_no', 
          'setup_cost_red', 'setup_cost_blue', 'red_prior_prob',
         'true_guilty_suspect', 'suspect_accused']+d3+d4+d5+['correct_suspect_accused', 'evidence_round']
-temp1 = temp1[cols]
-temp1.to_csv(oloc+'Task3_step2.csv', index=False)
+df = df[cols]
+df.to_csv(oloc+'Task3_step2.csv', index=False)
