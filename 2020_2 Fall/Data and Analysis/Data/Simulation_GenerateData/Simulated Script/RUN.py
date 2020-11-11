@@ -78,6 +78,6 @@ for iterate in range(r_no_files):
 ##############################################################################
 
 ## CLEAN THE DATASET (STEPS 2,3,4)
+exec(open('./Step1_Simulation.py').read())
 exec(open('./Step2_Simulation.py').read())
-exec(open('./Step4_Simulation.py').read())
 

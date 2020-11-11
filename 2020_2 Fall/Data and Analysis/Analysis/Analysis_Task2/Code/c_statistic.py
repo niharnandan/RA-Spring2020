@@ -57,6 +57,7 @@ def c_statistic(file):
     return t2_avg_score,t2_avg_samples,t2_perc_confirmatory_allrounds,t2_perc_confirmatory_round1
     
 def statistic_part(file):
+    # Import functions from modules
     from pandas import read_csv
     from numpy import mean
     from numpy import array
@@ -83,3 +84,23 @@ def statistic_part(file):
         avg_samples.append(mean(t2_accuse.loc[t2_accuse['participant_ID'] == i].iloc[:,10] +t2_accuse.loc[t2_accuse['participant_ID'] == i].iloc[:,11]))
 
     return (array(avg_rounds_low)+array(avg_rounds_high))/2,avg_samples
+
+def binned_data(action, n_bins):
+    # Import functions from modules
+    from numpy import linspace, array, digitize
+    # Select rows with action type of accuse
+    sus_col = action.columns.to_list().index('suspect')
+    # Create bins
+    bins = linspace(0, 1, n_bins)
+    data = array(action['posterior'])
+    # Split data into bins
+    digitized = digitize(data, bins)
+    # Calculate the total of suspect accused
+    sus_avg = [0]*n_bins
+    for key,value in action.iterrows():
+        sus_avg[digitized[key]-1] += value[sus_col]
+    # Calculate the average
+    for i in range(n_bins):
+        if sus_avg[i]: sus_avg[i] /= list(digitized).count(i+1)
+
+    return sus_avg
