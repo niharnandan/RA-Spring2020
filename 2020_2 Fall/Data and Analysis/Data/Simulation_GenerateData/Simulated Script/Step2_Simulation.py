@@ -18,7 +18,7 @@ warnings.filterwarnings('ignore')
 
 
 ## INITIALIZE
-print('Currently running STEP 4')
+print('Currently running STEP 2')
 f = open("values.txt").read().split('\n')
 no_files = int(f[8]) #Number of files
 oloc = open("../Output_Location (Simulated).txt", "r").read() #Output location
@@ -26,7 +26,7 @@ oloc = open("../Output_Location (Simulated).txt", "r").read() #Output location
 ## REPEAT FOR EVERY FILE IN THE FOLDER
 for name in range(65,65+no_files):
 
-    print('Running Step 4 for File', chr(name))
+    print('Running Step 2 for File', chr(name))
     # Read file
     step4_df = pd.read_csv(oloc+'Step2_'+chr(name)+'.csv')
     step4_df.head()
@@ -51,11 +51,11 @@ for name in range(65,65+no_files):
             pg = 0.75 if suspect[-1] == 0 else 1
             pi = 1 if suspect[-1] == 0 else 0.75
             # Create array which stores the data for a new row in the dataframe
-            temp = [i+1, 0, suspect[-1], suspect[:-1].count(0.0), 
-                   suspect[:-1].count(1.0), e_f, e_s]
+            temp = [i+1, 0, suspect[-1], suspect[:-1].count(1.0), 
+                   suspect[:-1].count(0.0), e_f, e_s]
             # Append to dataframe
             data.append(info_b+temp+[post]+info_e+[step4_df['timing_choice_'+str(i+1)][key]])
-            post = post*pg/(post*pg + pi*(1-post))
+            post = post*pi/(post*pi + pg*(1-post))
             # Checking for evidence found
             e_f = int(value[69+i]) if e_f != 1 else 1
             # If evidence found, checking for evidence for red/blue

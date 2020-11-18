@@ -30,16 +30,16 @@ for key,value in tqdm(df.iterrows()):
         suspect.append(rounds[i])
         pg = 0.75 if suspect[-1] == 0 else 1
         pi = 1 if suspect[-1] == 0 else 0.75
-        temp = [i+1, 0, suspect[-1], suspect[:-1].count(0.0), 
-               suspect[:-1].count(1.0), e_f, e_s]
+        temp = [i+1, 0, suspect[-1], suspect[:-1].count(1.0), 
+               suspect[:-1].count(0.0), e_f, e_s]
         data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+1)][key]])
-        post = post*pg/(post*pg + pi*(1-post))
+        post = post*pi/(post*pi + pg*(1-post))
         e_f = int(value[17+i]) if e_f != 1 else 1
         if e_f == 1: 
             e_s = value[7]
         else: e_f = 1 if e_f == 1 and i != 0 else 0
         post = value[7] if e_f == 1 else post
-    temp = [i+2, 1, value[7], suspect.count(0.0), suspect.count(1.0), e_f, e_s]
+    temp = [i+2, 1, value[7], suspect.count(1.0), suspect.count(0.0), e_f, e_s]
     data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+2)][key]])
 cols = ['participant_ID', 'treatment', 'part', 'trial_no', 'rounds',
        'red_prior_prob', 'current_rounds', 'action_type', 'suspect', 
@@ -67,12 +67,11 @@ for key,value in tqdm(df.iterrows()):
     #if value[3] == 1: print(len(rounds))
     e_f = 0
     e_s = -1
-    i = 1
-    for i in range(1,len(rounds)):
+    for i in range(len(rounds)):
         suspect.append(rounds[i])
         pg = 0.75 if suspect[-1] == 0 else 1
         pi = 1 if suspect[-1] == 0 else 0.75
-        temp = [i, 0, suspect[-1], suspect[:-1].count(0.0), 
+        temp = [i+1, 0, suspect[-1], suspect[:-1].count(0.0), 
                suspect[:-1].count(1.0), e_f, e_s]
         data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+1)][key]])
         post = post*pg/(post*pg + pi*(1-post))
@@ -84,7 +83,8 @@ for key,value in tqdm(df.iterrows()):
         post = value[7] if e_f == 1 else post
     if len(rounds) == 1 or len(rounds) == 0: i = 0
     suspect.append(value[7])
-    temp = [i+1, 1, suspect[-1], suspect[:-1].count(0.0), suspect[:-1].count(1.0), e_f, e_s]
+    if len(rounds) == 0: i = -1
+    temp = [i+2, 1, suspect[-1], suspect[:-1].count(0.0), suspect[:-1].count(1.0), e_f, e_s]
     data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+2)][key]])
 cols = ['participant_ID', 'treatment', 'part', 'trial_no', 'setup_cost_red', 'setup_cost_blue',
        'red_prior_prob', 'current_rounds', 'action_type', 'suspect', 
@@ -112,12 +112,11 @@ for key,value in tqdm(df.iterrows()):
     
     e_f = 0
     e_s = -1
-    i = 1
-    for i in range(1,len(rounds)):
+    for i in range(len(rounds)):
         suspect.append(rounds[i])
         pg = 0.75 if suspect[-1] == 0 else 1
         pi = 1 if suspect[-1] == 0 else 0.75
-        temp = [i, 0, suspect[-1], suspect[:-1].count(0.0), 
+        temp = [i+1, 0, suspect[-1], suspect[:-1].count(0.0), 
                suspect[:-1].count(1.0), e_f, e_s]
         data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+1)][key]])
         post = post*pg/(post*pg + pi*(1-post))
@@ -129,7 +128,8 @@ for key,value in tqdm(df.iterrows()):
         post = value[7] if e_f == 1 else post
     if len(rounds) == 1 or len(rounds) == 0: i = 0
     suspect.append(value[7])
-    temp = [i+1, 1, suspect[-1], suspect[:-1].count(0.0), suspect[:-1].count(1.0), e_f, e_s]
+    if len(rounds) == 0: i = -1
+    temp = [i+2, 1, suspect[-1], suspect[:-1].count(0.0), suspect[:-1].count(1.0), e_f, e_s]
     data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+2)][key]])
 cols = ['participant_ID', 'treatment', 'part', 'trial_no', 'setup_cost_red', 'setup_cost_blue',
        'red_prior_prob', 'current_rounds', 'action_type', 'suspect', 

@@ -15,7 +15,7 @@ from tqdm import tqdm
 
 
 ## INITIALIZE
-print('Currently running STEP 2')
+print('Currently running STEP 1')
 mypath= '../../../Data/RawData_OnlineExperiment/' #Path of data folder that contains simulated data
 oloc = open("../Output_Location (Simulated).txt", "r").read() #Path of output folder
 f = open("values.txt").read().split('\n') #To check for the number of files
@@ -26,12 +26,12 @@ no_files = int(f[8])
 for name in range(65,65+no_files):
     
     # Read file
-    print('Running Step 2 for File', chr(name))
+    print('Running Step 1 for File', chr(name))
     step2_df = pd.read_csv('../Simulated_Data/simulation results '+chr(name)+'.csv', error_bad_lines=False)
     
     # Replace values (convert strings to numerical variables)
-    step2_df = step2_df.replace('red', 0)
-    step2_df = step2_df.replace('blue', 1)
+    step2_df = step2_df.replace('red', 1)
+    step2_df = step2_df.replace('blue', 0)
     step2_df = step2_df.rename(columns={"setup_cost": "rounds",})
     step2_df = step2_df.rename(columns={"guilty_suspect_chosen": "true_guilty_suspect",})
     for i in range(1,63,1):
@@ -47,7 +47,7 @@ for name in range(65,65+no_files):
         step2_df['timing_choice_'+str(i)] = 0
 
     # Ennumeration values that is represented by the array index. Example: investigate_red will be stored as 0
-    values = ['investigate_red','investigate_blue','accuse_red','accuse_blue','advance_to_next_trial', 'evidence_shown']
+    values = ['investigate_blue','investigate_red','accuse_blue','accuse_red','advance_to_next_trial', 'evidence_shown']
     for i in values: step2_df = step2_df.replace(i, values.index(i))
 	
 	#Iterating over rows in the dataframe. 
