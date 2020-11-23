@@ -74,7 +74,7 @@ for key,value in tqdm(df.iterrows()):
         temp = [i+1, 0, suspect[-1], suspect[:-1].count(0.0), 
                suspect[:-1].count(1.0), e_f, e_s]
         data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+1)][key]])
-        post = post*pg/(post*pg + pi*(1-post))
+        post = post*pi/(post*pi + pg*(1-post))
         
         e_f = int(value[69+i]) if e_f != 1 else 1
         if e_f == 1: 
@@ -119,7 +119,7 @@ for key,value in tqdm(df.iterrows()):
         temp = [i+1, 0, suspect[-1], suspect[:-1].count(0.0), 
                suspect[:-1].count(1.0), e_f, e_s]
         data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+1)][key]])
-        post = post*pg/(post*pg + pi*(1-post))
+        post = post*pi/(post*pi + pg*(1-post))
         
         e_f = int(value[69+i]) if e_f != 1 else 1
         if e_f == 1: 
