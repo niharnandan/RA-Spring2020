@@ -1,3 +1,4 @@
+## IMPORT PACKAGES
 import numpy as np
 import pandas as pd
 from os import listdir
@@ -9,10 +10,14 @@ import seaborn as sns
 sns.set_style("darkgrid")
 warnings.filterwarnings('ignore')
 
-folder = ''
-oloc = open("../Output_Location.txt", "r").read()
-df = pd.read_csv(oloc+'Task1_step3.csv')
 
+## SET THE PATH
+oloc = open("../Output_Location.txt", "r").read()
+
+
+# RUN THE STEP FOR THE TASK 1 FILE
+folder = ''
+df = pd.read_csv(oloc+'Task1_step3.csv')
 print('Running Task 1 :')
 
 df.head()
@@ -50,9 +55,11 @@ df2 = pd.DataFrame(data,columns=cols)
 df2.head()
 df2.to_csv(oloc+'Task1_step4.csv', index=False)
 
+
+
+# RUN THE STEP FOR THE TASK 2 FILE
 folder = ''
 df = pd.read_csv(oloc+'Task2_step3.csv')
-
 print('Running Task 2 :')
 
 df.head()
@@ -96,9 +103,12 @@ df2.head()
 df2 = df2.fillna(0)
 df2.to_csv(oloc+'Task2_step4.csv', index=False)
 
+
+
+
+# RUN THE STEP FOR THE TASK 3 FILE
 folder = ''
 df = pd.read_csv(oloc+'Task3_step3.csv')
-
 print('Running Task 3 :')
 
 data = []
@@ -140,3 +150,4 @@ df2 = pd.DataFrame(data,columns=cols)
 df2.head()
 df2 = df2.fillna(0)
 df2.to_csv(oloc+'Task3_step4.csv', index=False)
+

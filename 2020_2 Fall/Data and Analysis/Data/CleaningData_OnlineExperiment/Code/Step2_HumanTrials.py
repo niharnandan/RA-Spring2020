@@ -1,4 +1,4 @@
-# Import libraries
+## IMPORT PACKAGES
 import numpy as np
 import pandas as pd
 from os import listdir
@@ -8,12 +8,13 @@ from tqdm import tqdm
 warnings.filterwarnings('ignore')
 mypath= '../../../Data/RawData_OnlineExperiment/'
 
-# Output location from previous task
+
+## SET THE PATH
 oloc = open("../Output_Location.txt", "r").read()
 
-# Read in Task 1 file
-df = pd.read_csv(oloc+'Task1.csv')
 
+# RUN THE STEP FOR THE TASK 1 FILE
+df = pd.read_csv(oloc+'Task1.csv')
 print('Running Task 1')
 
 d_columns = ['choice_'+str(i) for i in range(12,63)]
@@ -90,8 +91,12 @@ cols = ['participant_ID', 'treatment', 'part', 'trial_no',
 df = df[cols]
 df.to_csv(oloc+'Task1_step2.csv', index=False)
 
-df = pd.read_csv(oloc+'Task2.csv')
 
+
+
+
+# RUN THE STEP FOR THE TASK 2 FILE
+df = pd.read_csv(oloc+'Task2.csv')
 print('Running Task 2')
 
 drop_columns = ['num_evidences_total', 'final_evidence', 'bonus_earned', 
@@ -158,8 +163,13 @@ cols = ['participant_ID', 'treatment', 'part', 'trial_no',
 df = df[cols]
 df.to_csv(oloc+'Task2_step2.csv', index=False)
 
-df = pd.read_csv(oloc+'Task3.csv')
 
+
+
+
+
+# RUN THE STEP FOR THE TASK 3 FILE
+df = pd.read_csv(oloc+'Task3.csv')
 print('Running Task 3')
 
 drop_columns = ['num_evidences_total', 'final_evidence', 'bonus_earned', 
