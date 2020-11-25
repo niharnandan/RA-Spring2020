@@ -11,7 +11,7 @@ warnings.filterwarnings('ignore')
 mypath= '../RawData_OnlineExperiment/'
 files = [f for f in listdir(mypath)]
 oloc = open("../Output_Location.txt", "r").read()
-#files.remove('.DS_Store')
+files.remove('.DS_Store')
 
 
 ## CREATE FILE

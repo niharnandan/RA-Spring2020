@@ -24,3 +24,5 @@ exec(open('./Generate_Companion_HumanTrials.py').read())
 print('Generate Payoff file')
 exec(open('./Generate_Payoffs_HumanTrials.py').read())
 
+print('Data cleaning completed')
+
