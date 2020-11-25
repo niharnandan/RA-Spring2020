@@ -104,3 +104,9 @@ def binned_data(action, n_bins):
         if sus_avg[i]: sus_avg[i] /= list(digitized).count(i+1)
 
     return sus_avg
+
+def find_nearest(array, value):
+    from numpy import asarray, abs
+    array = asarray(array)
+    idx = (abs(array - value)).argmin()
+    return idx
