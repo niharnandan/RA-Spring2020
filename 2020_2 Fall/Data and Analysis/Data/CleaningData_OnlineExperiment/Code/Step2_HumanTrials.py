@@ -17,6 +17,7 @@ oloc = open("../Output_Location.txt", "r").read()
 df = pd.read_csv(oloc+'Task1.csv')
 print('Running Task 1')
 
+#Create list with names of columns to be deleted
 d_columns = ['choice_'+str(i) for i in range(12,63)]
 d_columns += ['timing_choice_'+str(i) for i in range(12,63)]
 d_columns += ['evidence_red_'+str(i) for i in range(10,31)]
@@ -25,30 +26,39 @@ d_columns += ['num_evidences_total', 'final_evidence', 'bonus_earned',
         'trial_chosen_for_bonus', 'total_bonus_paid_cents', 'setup_cost_investigate_red',
               'setup_cost_investigate_blue', 'timing_valid', 'timing_error', 
              'choice_10', 'choice_11']
+#Delete the columns
 df = df.drop(columns = d_columns)
+#Replace all red and blue values with 1 and 0
 df = df.replace('red', 1)
 df = df.replace('blue', 0)
+#Rename the columns
 df = df.rename(columns={"setup_cost": "rounds",})# 'guilty_suspect_chosen': 'true_guilty_suspect'})
+#Create columns with inital value as 0
 df['true_guilty_suspect'] = 0
 df['evidence_round'] = 0
+#Convert string to int correct_suspect_accused column
 for i in range(9,0,-1):
     df.insert(48, 'outcome_'+str(i), np.nan)
 df.correct_suspect_accused = df.correct_suspect_accused.astype(int)
 
+# Create ennumrated values for temp
 c = ['choice_' + str(i) for i in range(1,12)]
 temp = ['investigate_blue','investigate_red','accuse_blue','accuse_red','advance_to_next_trial']
 
 for i in temp:
     df = df.replace(i, temp.index(i))
-    
+
+#Get columns indexes
 evr_col = df.columns.to_list().index('evidence_red_1')
 evb_col = df.columns.to_list().index('evidence_blue_1')
 out_col = df.columns.to_list().index('outcome_1')
 choice_col = df.columns.to_list().index('choice_1')
 
 for key,value in tqdm(df.iterrows()):
+    #Update true_guilty_suspect column
     df['true_guilty_suspect'][key] = df['suspect_accused'][key] ^ 1 if df['correct_suspect_accused'][key] == 0 else df['suspect_accused'][key]
     temp = []
+    #Iterate over evidence set with red and blue counter separately
     counter_r = 0
     counter_b = 0
     for i in range(9):
@@ -60,14 +70,15 @@ for key,value in tqdm(df.iterrows()):
             counter_b += 1
     for i in range(1,len(temp)+1):
         df['outcome_'+str(i)][key] = temp[i-1]
-    
+    #Set evidence round to 1 or 0 based on evidence found or not
     temp = df.iloc[key, out_col:].to_list()
     df['evidence_round'][key] = temp.index(1.0)+1 if 1 in temp else 0
-    
+    #Extract values from choice set and only keep 1 and 0
     temp = df.iloc[key, choice_col:choice_col+9].to_list()
     temp = [x if x == 1 or x == 0 else np.nan for x in temp]
     df.iloc[key, choice_col:choice_col+9] = temp
 
+#Columns to be deleted
 d_columns = ['evidence_red_1', 'evidence_red_2', 'evidence_red_3', 
         'evidence_red_4', 'evidence_red_5', 'evidence_red_6', 
         'evidence_red_7', 'evidence_red_8', 'evidence_red_9', 
@@ -76,6 +87,7 @@ d_columns = ['evidence_red_1', 'evidence_red_2', 'evidence_red_3',
         'evidence_blue_7', 'evidence_blue_8', 'evidence_blue_9']
 df = df.drop(columns = d_columns)
 
+#Order of columns
 cols = ['participant_ID', 'treatment', 'part', 'trial_no', 
          'rounds', 'red_prior_prob',
         'true_guilty_suspect', 'suspect_accused',  

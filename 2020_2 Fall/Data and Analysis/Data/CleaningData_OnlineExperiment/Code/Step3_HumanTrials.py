@@ -18,6 +18,7 @@ df_task1 = pd.read_csv(oloc+'Task1_step2.csv')
 df_task2 = pd.read_csv(oloc+'Task2_step2.csv')
 df_task3 = pd.read_csv(oloc+'Task3_step2.csv')
 
+# Switches the values between 1 and 0 for all experiments with treatment as 0 (innocent)
 
 ## STEP 3, RUN SEPARATELY FOR EACH TASK
 print('Running Task 1 :')
