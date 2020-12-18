@@ -84,8 +84,8 @@ for key,value in tqdm(df.iterrows()):
         suspect.append(rounds[i])
         pg = 0.75 if suspect[-1] == 0 else 1
         pi = 1 if suspect[-1] == 0 else 0.75
-        temp = [i+1, 0, suspect[-1], suspect[:-1].count(0.0), 
-               suspect[:-1].count(1.0), e_f, e_s]
+        temp = [i+1, 0, suspect[-1], suspect[:-1].count(1.0), 
+               suspect[:-1].count(0.0), e_f, e_s]
         data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+1)][key]])
         post = post*pi/(post*pi + pg*(1-post))
         
@@ -97,7 +97,7 @@ for key,value in tqdm(df.iterrows()):
     if len(rounds) == 1 or len(rounds) == 0: i = 0
     suspect.append(value[7])
     if len(rounds) == 0: i = -1
-    temp = [i+2, 1, suspect[-1], suspect[:-1].count(0.0), suspect[:-1].count(1.0), e_f, e_s]
+    temp = [i+2, 1, suspect[-1], suspect[:-1].count(1.0), suspect[:-1].count(0.0), e_f, e_s]
     data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+2)][key]])
 cols = ['participant_ID', 'treatment', 'part', 'trial_no', 'setup_cost_red', 'setup_cost_blue',
        'red_prior_prob', 'current_rounds', 'action_type', 'suspect', 
@@ -132,8 +132,8 @@ for key,value in tqdm(df.iterrows()):
         suspect.append(rounds[i])
         pg = 0.75 if suspect[-1] == 0 else 1
         pi = 1 if suspect[-1] == 0 else 0.75
-        temp = [i+1, 0, suspect[-1], suspect[:-1].count(0.0), 
-               suspect[:-1].count(1.0), e_f, e_s]
+        temp = [i+1, 0, suspect[-1], suspect[:-1].count(1.0), 
+               suspect[:-1].count(0.0), e_f, e_s]
         data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+1)][key]])
         post = post*pi/(post*pi + pg*(1-post))
         
@@ -145,7 +145,7 @@ for key,value in tqdm(df.iterrows()):
     if len(rounds) == 1 or len(rounds) == 0: i = 0
     suspect.append(value[7])
     if len(rounds) == 0: i = -1
-    temp = [i+2, 1, suspect[-1], suspect[:-1].count(0.0), suspect[:-1].count(1.0), e_f, e_s]
+    temp = [i+2, 1, suspect[-1], suspect[:-1].count(1.0), suspect[:-1].count(0.0), e_f, e_s]
     data.append(info_b+temp+[post]+info_e+[df['timing_choice_'+str(i+2)][key]])
 cols = ['participant_ID', 'treatment', 'part', 'trial_no', 'setup_cost_red', 'setup_cost_blue',
        'red_prior_prob', 'current_rounds', 'action_type', 'suspect', 

@@ -1,17 +1,23 @@
 #!/bin/bash
 
-# My first script
+# Run Python Script
 mytitle="Run Jupyter Notebooks"
 echo -e '\033k'$mytitle'\033\\'
 
 
 ECHO ============================
-ECHO Running Companion File
+ECHO Running Scripts
 ECHO ============================
-jupyter nbconvert --to notebook --execute Code/Companion.ipynb
+python Code/Step1_HumanTrials.py
 ECHO ============================
-ECHO Calculating Payoff
+python Code/Step2_HumanTrials.py
 ECHO ============================
-jupyter nbconvert --to notebook --execute Code/Payoff.ipynb
+python Code/Step3_HumanTrials.py
+ECHO ============================
+python Code/Step4_HumanTrials.py
+ECHO ============================
+python Code/Generate_Companion_HumanTrials.py
+ECHO ============================
+python Code/Generate_Payoffs_HumanTrials.py
 
 read -n 1 -s -r -p "Press any key to continue"

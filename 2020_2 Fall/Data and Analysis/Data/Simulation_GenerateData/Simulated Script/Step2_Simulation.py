@@ -74,7 +74,7 @@ for name in range(65,65+no_files):
             else: e_f = 1 if e_f == 1 and i != 0 else 0
             post = value[7] if e_f == 1 else post
         suspect.append(value[7])
-        temp = [i+1, 1, suspect[-1], suspect[:-1].count(0.0), suspect[:-1].count(1.0), e_f, e_s]
+        temp = [i+1, 1, suspect[-1], suspect[:-1].count(1.0), suspect[:-1].count(0.0), e_f, e_s]
         # Append to dataframe
         data.append(info_b+temp+[post]+info_e+[step4_df['timing_choice_'+str(i+2)][key]])
         
